@@ -17,7 +17,7 @@ namespace ServiceCalculator.Controllers
         [HttpPost(Name = "AddExpressionController")]
         public IActionResult Post(ExpressionAndResult exp_and_res)
         {
-            ListOfExpressions.List.Add(exp_and_res);
+            ListOfExpressions.List.Insert(0, exp_and_res);
             return StatusCode(200);
         }
     }
