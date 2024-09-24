@@ -6,6 +6,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -49,13 +50,18 @@ class HistoryDisplay(private val entry: HistoryEntry): HBox() {
 
     init {
         text = Label(entry.task).apply {
-            font = Font(24.0)
+            font = Font("Arial", 24.0)
+            textFill = Color.WHITE
             maxWidth = Double.POSITIVE_INFINITY
         }
         val copyButton = Button("Copy input").apply {
+            styleClass.add("historyButton")
+            //font = Font("Arial", 12.0)
             setOnMouseClicked { copy(entry.task) }
         }
         val showButton = Button("Copy answer").apply {
+            styleClass.add("historyButton")
+            //font = Font("Arial", 12.0)
             setOnMouseClicked { copy(entry.answer.toString()) }
         }
         children.addAll(text, copyButton, showButton)

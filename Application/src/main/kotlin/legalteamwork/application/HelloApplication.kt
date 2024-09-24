@@ -5,21 +5,11 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 
-class HelloApplication : Application() {
-    override fun start(stage: Stage) {
-        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 640.0, 480.0)
-        scene.stylesheets.add(this::class.java.getResource("style.css")!!.toExternalForm())
-        stage.title = "Hello!"
-        stage.scene = scene
-        stage.show()
-    }
-}
-
 class CalculatorApplication : Application() {
     override fun start(stage: Stage) {
-        val fxmlLoader = FXMLLoader(CalculatorApplication::class.java.getResource("Calculator-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 298.0, 537.0)
+        val fxmlLoader = FXMLLoader(CalculatorApplication::class.java.getResource("main-view.fxml"))
+        val scene = Scene(fxmlLoader.load(), 600.0, 537.0 + 29.0)
+        scene.stylesheets.add(this::class.java.getResource("style.css")!!.toExternalForm())
         stage.title = "Calculator"
         stage.scene = scene
         stage.show()

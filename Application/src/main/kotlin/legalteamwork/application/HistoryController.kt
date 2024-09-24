@@ -3,7 +3,7 @@ package legalteamwork.application
 import javafx.fxml.FXML
 import javafx.scene.layout.VBox
 
-class HelloController {
+class HistoryController {
     lateinit var historyBox: VBox
 
     @FXML
