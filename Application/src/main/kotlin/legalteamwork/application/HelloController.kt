@@ -1,14 +1,18 @@
 package legalteamwork.application
 
 import javafx.fxml.FXML
-import javafx.scene.control.Label
+import javafx.scene.layout.VBox
 
 class HelloController {
-    @FXML
-    private lateinit var welcomeText: Label
+    lateinit var historyBox: VBox
 
     @FXML
-    private fun onHelloButtonClick() {
-        welcomeText.text = "Welcome to JavaFX Application!"
+    fun initialize() {
+        initHistory()
+    }
+
+    @FXML
+    fun initHistory() {
+        historyBox.children.setAll(getRecentTasks().map { HistoryDisplay(it) })
     }
 }
