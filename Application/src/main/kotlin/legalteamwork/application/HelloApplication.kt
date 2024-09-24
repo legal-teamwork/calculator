@@ -16,6 +16,17 @@ class HelloApplication : Application() {
     }
 }
 
+class CalculatorApplication : Application() {
+    override fun start(stage: Stage) {
+        val fxmlLoader = FXMLLoader(CalculatorApplication::class.java.getResource("Calculator-view.fxml"))
+        val scene = Scene(fxmlLoader.load(), 298.0, 537.0)
+        stage.title = "Calculator"
+        stage.scene = scene
+        stage.show()
+    }
+}
+
 fun main() {
-    Application.launch(HelloApplication::class.java)
+//    Application.launch(HelloApplication::class.java)
+    Application.launch(CalculatorApplication::class.java)
 }
