@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #000;">
+    <TabPane fx:id="tabs">
+        <Tab text="Calculator" closable="false">
+            <fx:include source="Calculator-view.fxml" />
+        </Tab>
+        <Tab text="History" closable="false">
+            <fx:include source="history-view.fxml" />
+        </Tab>
+    </TabPane>
+</VBox>

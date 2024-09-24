@@ -1,3 +1,38 @@
 .historyBox:hover {
-    -fx-background-color: #ccc;
+    -fx-background-color: #333;
+}
+
+.historyButton {
+    -fx-background-color: #696969;
+    -fx-background-radius: 5;
+    -fx-font-family: Arial;
+    -fx-text-fill: #FFF;
+}
+
+.historyButton:hover {
+    -fx-background-color: #808080;
+}
+
+.tab-pane {
+    -fx-tab-min-width: 70px;
+}
+
+.tab-header-area .tab-header-background {
+    -fx-background-color: #000;
+}
+
+.tab
+{
+    -fx-background-color: #055;
+    -fx-alignment: CENTER;
+    -fx-font-family: Arial;
+}
+
+.tab-label {
+    -fx-text-fill: #FFF;
+}
+
+.tab:selected
+{
+    -fx-background-color: #066;
 }

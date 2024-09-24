@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="legalteamwork.application.HistoryController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <HBox alignment="CENTER_LEFT">
+        <Label text="Recent Calculations" HBox.hgrow="ALWAYS" maxWidth="Infinity" textFill="white">
+            <font>
+                <Font name="Arial" size="36.0" />
+            </font>
+        </Label>
+        <Button styleClass="historyButton" text="Refresh" onMouseClicked="#initHistory">
+            <font>
+                <Font name="Arial" size="16.0" />
+            </font>
+        </Button>
+    </HBox>
+
+   <VBox fx:id="historyBox" prefWidth="Infinity" prefHeight="10000.0" spacing="5" />
+</VBox>
