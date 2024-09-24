@@ -27,6 +27,6 @@ class CalculatorApplication : Application() {
 }
 
 fun main() {
-//    Application.launch(HelloApplication::class.java)
-    Application.launch(CalculatorApplication::class.java)
+    Application.launch(HelloApplication::class.java)
+//    Application.launch(CalculatorApplication::class.java)
 }
