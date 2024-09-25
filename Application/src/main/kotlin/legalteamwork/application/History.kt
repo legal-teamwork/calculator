@@ -8,21 +8,29 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.*
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import java.net.URI
 
+@Serializable
 data class HistoryEntry(
-    val task: String,
-    val answer: Double
+    val expression: String,
+    val result: String
 )
 
+@OptIn(ExperimentalSerializationApi::class)
 fun getRecentTasks(): List<HistoryEntry> {
-    /* test implementation */
-    return listOf(
-        HistoryEntry("2+2", 4.0),
-        HistoryEntry("5*3/2", 7.5),
-        HistoryEntry("(5+8)/4*4", 13.0)
-    )
+    try {
+        URI("$serverUrl/GetListOfExpressions").toURL()
+    } catch (_: IllegalArgumentException) {
+        return listOf()
+    }
+    val stream = URI("$serverUrl/GetListOfExpressions").toURL().openStream()
+    val obj = Json.decodeFromStream<List<HistoryEntry>>(stream)
+    return obj
 }
 
 class HistoryDisplay(private val entry: HistoryEntry): HBox() {
@@ -41,28 +49,26 @@ class HistoryDisplay(private val entry: HistoryEntry): HBox() {
     private fun show() {
         if (shown) {
             shown = false
-            text.text = entry.task
+            text.text = entry.expression
         } else {
             shown = true
-            text.text = entry.answer.toString()
+            text.text = entry.result
         }
     }
 
     init {
-        text = Label(entry.task).apply {
+        text = Label(entry.expression).apply {
             font = Font("Arial", 24.0)
             textFill = Color.WHITE
             maxWidth = Double.POSITIVE_INFINITY
         }
         val copyButton = Button("Copy input").apply {
             styleClass.add("historyButton")
-            //font = Font("Arial", 12.0)
-            setOnMouseClicked { copy(entry.task) }
+            setOnMouseClicked { copy(entry.expression) }
         }
         val showButton = Button("Copy answer").apply {
             styleClass.add("historyButton")
-            //font = Font("Arial", 12.0)
-            setOnMouseClicked { copy(entry.answer.toString()) }
+            setOnMouseClicked { copy(entry.result) }
         }
         children.addAll(text, copyButton, showButton)
 

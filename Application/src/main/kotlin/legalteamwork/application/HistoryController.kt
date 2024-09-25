@@ -1,6 +1,7 @@
 package legalteamwork.application
 
 import javafx.fxml.FXML
+import javafx.scene.control.TextArea
 import javafx.scene.layout.VBox
 
 class HistoryController {
@@ -13,6 +14,7 @@ class HistoryController {
 
     @FXML
     fun initHistory() {
-        historyBox.children.setAll(getRecentTasks().map { HistoryDisplay(it) })
+        val entries = getRecentTasks()
+        historyBox.children.setAll(entries.map { HistoryDisplay(it) })
     }
 }

@@ -6,16 +6,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Font?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0"
-            style="-fx-background-color: #000;">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="legalteamwork.application.MainViewController"
+      prefHeight="400.0" prefWidth="600.0"
+      style="-fx-background-color: #000;">
     <TabPane fx:id="tabs">
         <Tab text="Calculator" closable="false">
             <fx:include source="Calculator-view.fxml" />
         </Tab>
         <Tab text="History" closable="false">
             <fx:include source="history-view.fxml" />
+        </Tab>
+        <Tab text="Settings" closable="false">
+            <VBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Server URL" textFill="white">
+                        <font>
+                            <Font name="Arial" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextArea HBox.hgrow="ALWAYS" maxHeight="18.0" minWidth="0.0" fx:id="serverUrlInput" />
+                </HBox>
+                <Region VBox.vgrow="ALWAYS" />
+            </VBox>
         </Tab>
     </TabPane>
 </VBox>

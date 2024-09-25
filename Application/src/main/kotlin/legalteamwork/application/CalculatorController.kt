@@ -1,47 +1,78 @@
-package legalteamwork.application;
+package legalteamwork.application
 
-import javafx.fxml.FXML;
+import com.fasterxml.jackson.databind.ObjectMapper
+import javafx.event.ActionEvent
+import javafx.fxml.FXML
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import kotlin.math.exp
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-
-public class CalculatorController {
+class CalculatorController {
+    @FXML
+    private lateinit var output: Label
+    private val expression = StringBuilder()
 
     @FXML
-    private Label output;
-    private StringBuilder expression = new StringBuilder();
-
-    @FXML
-    private void clearOutput() {
-        output.setText("0");
-        expression.setLength(0);
+    private fun clearOutput() {
+        output.text = "0"
+        expression.setLength(0)
     }
 
     @FXML
-    private void readExpression(ActionEvent event) {
-        String value = ((Button) event.getSource()).getText();
+    private fun readExpression(event: ActionEvent) {
+        val value = (event.source as Button).text
 
-        if (value.equals("=")) {
-            calculateResult();
+        if (value == "=") {
+            calculateResult()
         } else {
-            expression.append(value);
-            output.setText(expression.toString());
+            expression.append(value)
+            output.text = expression.toString()
         }
     }
 
-    private void calculateResult() {
-        String expressionInput = expression.toString();
+    private fun calculateResult() {
+        val expressionInput = expression.toString()
 
         try {
-            String result = expressionInput; // Для примера, просто возвращаем выражение. А так выражение отправляется в парсер и выдает результат
-            output.setText(result);
+            val result = getResult(expressionInput)
+            sendToServer(expressionInput, result)
+            output.text = result
+        } catch (e: Exception) {
+            output.text = "Err"
+        } finally {
+            expression.setLength(0)
         }
-        catch (Exception e) {
-            output.setText("Err");
-        }
-        finally {
-            expression.setLength(0);
-        }
+    }
+
+    private fun getResult(input: String): String {
+        /* test implementation */
+        return "$input (but result)"
+    }
+
+    private fun sendToServer(expression: String, result: String) {
+        val values = mapOf("expression" to expression, "result" to result)
+
+        val objectMapper = ObjectMapper()
+        val requestBody: String = objectMapper
+            .writeValueAsString(values)
+
+        val client = HttpClient.newBuilder().build();
+        val request = HttpRequest.newBuilder()
+            .uri(URI.create("$serverUrl/AddExpression"))
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+            .build()
+        val response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        println(response.body())
     }
 }
