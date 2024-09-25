@@ -44,27 +44,24 @@ class CalculatorController {
         val expressionInput = expression.toString()
 
         try {
-            val result = getResult(expressionInput)
-            sendToServer(expressionInput, result)
+            val result = sendToServer(expressionInput)
             output.text = result
+        /*} catch (e: IllegalArgumentException) {
+            output.text = "Connect to server"
         } catch (e: Exception) {
-            output.text = "Err"
+            output.text = "Err"*/
         } finally {
             expression.setLength(0)
         }
     }
 
-    private fun getResult(input: String): String {
-        /* test implementation */
-        return "$input (but result)"
-    }
-
-    private fun sendToServer(expression: String, result: String) {
-        val values = mapOf("expression" to expression, "result" to result)
+    private fun sendToServer(expression: String): String {
+        val map = mapOf("expression" to expression)
 
         val objectMapper = ObjectMapper()
         val requestBody: String = objectMapper
-            .writeValueAsString(values)
+            .writeValueAsString(map)
+        println(requestBody)
 
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
@@ -72,7 +69,8 @@ class CalculatorController {
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .build()
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
         println(response.body())
+        return Json.decodeFromString<HistoryEntry>(response.body()).result
     }
 }

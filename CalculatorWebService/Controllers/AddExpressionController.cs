@@ -2,6 +2,11 @@
 
 namespace ServiceCalculator.Controllers
 {
+    public class AddExpressionInput
+    {
+        public string Expression { get; set; }
+    }
+
     [ApiController]
     [Route("[controller]")]
     public class AddExpressionController : ControllerBase
@@ -15,10 +20,11 @@ namespace ServiceCalculator.Controllers
         }
 
         [HttpPost(Name = "AddExpressionController")]
-        public IActionResult Post(ExpressionAndResult exp_and_res)
+        public ExpressionAndResult Post(AddExpressionInput expression)
         {
+            ExpressionAndResult exp_and_res = new(expression.Expression);
             ListOfExpressions.List.Insert(0, exp_and_res);
-            return StatusCode(200);
+            return exp_and_res;
         }
     }
 }
