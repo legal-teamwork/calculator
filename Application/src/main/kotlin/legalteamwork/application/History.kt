@@ -17,6 +17,7 @@ import java.net.URI
 
 @Serializable
 data class HistoryEntry(
+    val id: Int,
     val expression: String,
     val result: String
 )
@@ -28,7 +29,7 @@ fun getRecentTasks(): List<HistoryEntry> {
     } catch (_: IllegalArgumentException) {
         return listOf()
     }
-    val stream = URI("$serverUrl/GetListOfExpressions").toURL().openStream()
+    val stream = URI("$serverUrl/api/GetListOfExpressions").toURL().openStream()
     val obj = Json.decodeFromStream<List<HistoryEntry>>(stream)
     return obj
 }

@@ -9,16 +9,16 @@
 <?import javafx.scene.text.Font?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="legalteamwork.application.MainViewController"
       prefHeight="400.0" prefWidth="600.0"
       style="-fx-background-color: #000;">
-    <TabPane fx:id="tabs">
+    <TabPane>
         <Tab text="Calculator" closable="false">
             <fx:include source="Calculator-view.fxml" />
         </Tab>
         <Tab text="History" closable="false">
             <fx:include source="history-view.fxml" />
         </Tab>
+        <!--
         <Tab text="Settings" closable="false">
             <VBox>
                 <HBox alignment="CENTER_LEFT">
@@ -32,5 +32,6 @@
                 <Region VBox.vgrow="ALWAYS" />
             </VBox>
         </Tab>
+        -->
     </TabPane>
 </VBox>

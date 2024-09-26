@@ -5,6 +5,7 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
@@ -16,6 +17,13 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import kotlin.math.exp
+
+var serverUrl: String = "http://localhost:5074"
+
+@Serializable
+private data class CalculationResponse(
+    val result: String
+)
 
 class CalculatorController {
     @FXML
@@ -42,6 +50,9 @@ class CalculatorController {
 
     private fun calculateResult() {
         val expressionInput = expression.toString()
+            .replace("–", "-")
+            .replace("x", "*")
+            .replace("÷", "/")
 
         try {
             val result = sendToServer(expressionInput)
@@ -65,12 +76,12 @@ class CalculatorController {
 
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
-            .uri(URI.create("$serverUrl/AddExpression"))
+            .uri(URI.create("$serverUrl/api/CalculateExpression"))
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString())
         println(response.body())
-        return Json.decodeFromString<HistoryEntry>(response.body()).result
+        return Json.decodeFromString<CalculationResponse>(response.body()).result
     }
 }
