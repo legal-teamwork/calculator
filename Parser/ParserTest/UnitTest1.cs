@@ -16,10 +16,16 @@ namespace Tests
     {
         Calculator calculator;
 
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
             Directory.SetCurrentDirectory("..\\..\\..\\..");
+            var process = new Process();
+            process.StartInfo.FileName = "g++";
+            process.StartInfo.Arguments = "Parser.cpp -o Parser";
+            process.Start();
+            process.WaitForExit();
+
             calculator = new Calculator();
         }
 

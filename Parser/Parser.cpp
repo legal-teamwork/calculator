@@ -217,7 +217,7 @@ signed main() {
         }
         catch (std::runtime_error e) {
             check = 0;
-            cout << "Bad input";
+            cout << "Err";
         }
     }
 }
